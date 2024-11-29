@@ -3,7 +3,7 @@ import React from 'react';
 
 function SearchBar() {
   return (
-    <div className="flex justify-center mt-4 ">
+    <div className="flex justify-center mt-4 p-8">
       <input
         type="text"
         placeholder="Search Doctor, ailment, medications etc...."

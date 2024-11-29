@@ -3,18 +3,18 @@ import Header from './Header';
 import SearchBar from './SearchBar';
 import Upcoming from './Upcoming';
 import AvailableDoctors from './AvailableDoctors';
-import Footer from './Footer';
+import Menu from './Menu';
 
 const Profile = () => {
   return (
-    <div className="min-h-screen bg-gray-100 p-8">
+    <div className="min-h-screen bg-gray-100">
         <Header />
         <SearchBar />
         <main className="mt-8">
           <Upcoming />
           <AvailableDoctors />
         </main>
-        <Footer />
+        {/* <Menu/> */}
       </div>
   )
 }

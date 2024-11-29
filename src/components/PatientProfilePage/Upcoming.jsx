@@ -6,7 +6,7 @@ import userImage from '../../assets/doc.jpeg';
 
 function Upcoming() {
   return (
-    <section className="mt-8">
+    <section className="mt-8 p-8">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-inter font-extrabold">Upcoming Appointment</h2>
         <button className="text-black-500 font-inter font-normal text-2xl">See all</button>

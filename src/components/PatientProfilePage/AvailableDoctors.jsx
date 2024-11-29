@@ -10,7 +10,7 @@ function AvailableDoctors() {
   ];
 
   return (
-    <section className="mt-8">
+    <section className="mt-8 p-8">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-inter font-bold">Available Doctors</h2>
         <button className="text-blue-500 font-inter">See all</button>

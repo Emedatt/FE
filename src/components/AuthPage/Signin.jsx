@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import { FaFacebook, FaTwitter, FaInstagram, FaYoutube, FaLinkedin, FaApple } from 'react-icons/fa';
-import GoogleLogo from '../../assets/androidDownload.png';
+import Google from '../../assets/Google.png';
+import facebook from '../../assets/facebook.png';
 import { Link, useNavigate } from 'react-router-dom';
 
 function Signin() {
@@ -90,11 +91,14 @@ function Signin() {
 
             <div className='max-w-md gap-4 flex items-center'>
             <button className='sm:w-[35px] md:w-[46px] lg:w-[54px] h-[44px] sm:h-[48px] md:h-[52px] lg:h-[56px] flex items-center justify-center gap-4 py-1 px-2 rounded-[50%] bg-white text-black text-base sm:text-sm font-normal leading-6 [letter-spacing:-0.02em] border-2'>
-              <img className='w-[27px]' src={GoogleLogo} alt="google logo" />
+              <img className='w-[27px]' src={Google} alt="google logo" />
             </button>
 
             <button className='sm:w-[35px] md:w-[46px] lg:w-[54px] h-[44px] sm:h-[48px] md:h-[52px] lg:h-[56px] flex items-center justify-center gap-4 py-1 px-2 rounded-[50%] bg-white text-black text-base sm:text-sm font-normal leading-6 [letter-spacing:-0.02em] border-2'>
               <FaApple style={{ fontSize: '20px' }} />
+            </button>
+            <button className='sm:w-[35px] md:w-[46px] lg:w-[54px] h-[44px] sm:h-[48px] md:h-[52px] lg:h-[56px] flex items-center justify-center gap-4 py-1 px-2 rounded-[50%] bg-white text-black text-base sm:text-sm font-normal leading-6 [letter-spacing:-0.02em] border-2'>
+              <img className='w-[17px] object-cover' src={facebook} alt="google logo" />
             </button>
           </div>
 

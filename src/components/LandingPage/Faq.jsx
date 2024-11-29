@@ -14,8 +14,8 @@ function Faq() {
   };
 
   return (
-    <div className='flex justify-between my-2'>
-      <div className='w-[32.625rem] h-[33.4375rem] p-[8.9375rem] pr-[3.9375rem] pb-[10.875rem] pl-[6.5rem] gap-[0.625rem] bg-[#417BEB] flex flex-col justify-center'>
+    <div className='w-full flex flex-col md:flex-row justify-between'>
+      <div className='w-full h-[280px] md:w-[32.625rem] md:h-[33.4375rem] p-[8.9375rem] pr-[3.9375rem] pb-[10.875rem] pl-[6.5rem] gap-[0.625rem] bg-[#417BEB] flex flex-col justify-center'>
         <h2 className='font-inter text-[#fff] text-[2.25rem] font-extrabold leading-[2.5rem] text-left'>
           FAQs
         </h2>
@@ -29,9 +29,9 @@ function Faq() {
           <img src={LinkArrow} alt="" />
         </button>
       </div>
-      <div className='flex-1 flex flex-col w-[36.5rem] h-[33.4375rem] p-[4rem] gap-[1.5rem]'>
+      <div className='flex-1 flex flex-col justify-center items-center w-full md:w-[36.5rem] h-[33.4375rem] p-3 md:p-[4rem] gap-[1.5rem]'>
         {/* FAQ Item 1 */}
-        <div className="w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
+        <div className="w-[360px] md:w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
           <div className='flex justify-between'>
             <p className="font-inter text-[1rem] font-semibold leading-[1.45rem] text-left text-[#323232]">
               How do I schedule an appointment?
@@ -53,7 +53,7 @@ function Faq() {
         </div>
 
         {/* FAQ Item 2 */}
-        <div className="w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
+        <div className="w-[360px] md:w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
           <div className='flex justify-between'>
             <p className="font-inter text-[1rem] font-semibold leading-[1.45rem] text-left text-[#323232]">
               What types of consultations are available?
@@ -75,7 +75,7 @@ function Faq() {
         </div>
 
         {/* FAQ Item 3 */}
-        <div className="w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
+        <div className="w-[360px] md:w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
           <div className='flex justify-between'>
             <p className="font-inter text-[1rem] font-semibold leading-[1.45rem] text-left text-[#323232]">
               Is the consultation secure and private?
@@ -97,7 +97,7 @@ function Faq() {
         </div>
 
         {/* FAQ Item 4 */}
-        <div className="w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
+        <div className="w-[360px] md:w-[584px] p-[20px] pl-[24px] gap-[10px] rounded-[12px] border border-[#DCDCDC] bg-white">
           <div className='flex justify-between'>
             <p className="font-inter text-[1rem] font-semibold leading-[1.45rem] text-left text-[#323232]">
               Can I change or cancel my appointment?
