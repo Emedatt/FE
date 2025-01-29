@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "Inter";
+  src: url("https://fonts.cdnfonts.com/css/inter");
+}
+
+@theme {
+  --font-sf-pro: "SF Pro Display", sans-serif;
+  --clr-white: "#FFFFFF";
+  --clr-nav: "#0D192F"
+  --clr-black: "#000000";
+}
