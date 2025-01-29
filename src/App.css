@@ -6,8 +6,9 @@
 }
 
 @theme {
-  --font-sf-pro: "SF Pro Display", sans-serif;
+  --font-inter: "Inter", sans-serif;
   --clr-white: "#FFFFFF";
-  --clr-nav: "#0D192F"
+  --clr-nav-1-text: "#969696";
+  --clr-nav-2: "#0D192F";
   --clr-black: "#000000";
 }
