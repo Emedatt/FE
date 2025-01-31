@@ -1,4 +1,8 @@
 module.exports = {
+  content: ["./src/**/*.{js,jsx,ts,tsx}"], // Ensure correct paths
+  theme: {
+    extend: {},
+  },
   plugins: {
     "@tailwindcss/postcss": {},
     autoprefixer: {},
