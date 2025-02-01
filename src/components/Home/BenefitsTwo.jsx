@@ -1,6 +1,6 @@
 import React from 'react'
 import benefitsTwoHero from '../../images/benefitsTwo-hero.png';
-import { benefitsTwo } from './data';
+import { benefitsTwo } from './data.js';
 import { Link } from 'react-router-dom';
 import { MdArrowOutward } from "react-icons/md";
 const BenefitsTwo = () => {

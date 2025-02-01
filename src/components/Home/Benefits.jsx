@@ -1,5 +1,5 @@
 import React from 'react';
-import { benefits } from './data';
+import { benefits } from './data.js';
 
 const Benefits = () => {
   return (
