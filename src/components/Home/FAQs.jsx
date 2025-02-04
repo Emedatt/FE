@@ -12,10 +12,12 @@ const FAQs = () => {
     setOpenIndex(openIndex === index ? null : index);
   };
   return (
-    <div className='xl:h-[100vh] xl:w-[100vh]'>
-      <section className="px-[40px] py-[48px] text-white bg-[#417BEB] text-center">
+    <div className="w-screen xl:flex">
+      <section className="px-[40px] py-[48px] text-white bg-[#417BEB] text-center xl:h-[535px] xl:w-[522px] xl:pt-[143px] xl:pl-[104px]
+      xl:text-left
+      ">
         <h1 className="font-bold text-[20px]">FAQs</h1>
-        <p className="text-[14px] mt-[20px] max-w-[500px] mx-auto">
+        <p className="text-[14px] mt-[20px] max-w-[500px] mx-auto xl:max-w-[300px] xl:mx-0">
           Here, we've compiled answers to some of the most common inquiries to
           help you navigate your online consultation experience with ease and
           confidence.
@@ -31,13 +33,13 @@ const FAQs = () => {
           </button>
         </Link>
       </section>
-      <section className='mt-[24px] flex flex-col gap-y-[24px] items-center xl:w-1/2'>
+      <section className='mt-[24px] flex flex-col gap-y-[24px] items-center xl:justify-center xl:items-center xl:mx-auto'>
         {
           accordion.map(({id, title, titleStyles, text, textStyles}) => {
             return (
               <div
                 key={id}
-                className="p-[10px] border-1 border-solid border-[#CACACA] max-xl:max-w-[300px] rounded-[12px]"
+                className="p-[10px] border-1 border-solid border-[#CACACA] max-xl:max-w-[300px] rounded-[12px] xl:w-[500px]"
               >
                 <div className="flex justify-between items-center">
                   <h2 className={titleStyles}>{title}</h2>

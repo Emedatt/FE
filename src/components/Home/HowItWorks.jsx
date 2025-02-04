@@ -7,7 +7,7 @@ import bigArrow from '../../images/big-arrow.svg';
 
 const HowItWorks = () => {
   return (
-    <div className="bg-[#F9FCFF] pt-[40px] pb-[40px] px-[20px] flex flex-col items-center xl:h-[100vh]">
+    <div className="bg-[#F9FCFF] pt-[40px] pb-[40px] px-[20px] flex flex-col items-center xl:h-[10vh]">
       <div>
         <h1 className="text-center font-bold text-[20px] text-[#323232] xl:text-[36px]">
           How It Works

@@ -110,7 +110,7 @@ const Nav = () => {
               animate={{ width: "90%" }}
               transition={{ duration: 0.75 }}
               exit={{ width: 0, transition: { duration: 1 } }}
-              className="absolute top-0 right-0 w-[90%] h-screen py-[30px] bg-[#0D192F] flex flex-col"
+              className="absolute top-0 right-0 w-[90%] h-screen py-[30px] bg-[#0D192F] flex flex-col z-[50]"
             >
               <div className="*:text-[20px] *:text-[#FFFFFF] flex flex-col items-center gap-y-[48px]">
                 {showCancel && (
@@ -197,7 +197,12 @@ const Nav = () => {
                   Login
                 </Link>
                 <Link to="/signup" onClick={handleClick}>
-                  <button className="h-[53px] w-[240px] text-[20px] bg-[#417BEB] text-white rounded-[16px]">
+                  <button
+                    className="h-[53px] w-[240px] text-[20px] bg-[#417BEB] text-white rounded-[16px] hover:ring-[2px]
+                  hover:ring-offset-[2px] hover:ring-[#417BEB] active:ring-[2px]
+                  active:ring-offset-[2px] active:ring-[#417BEB]
+                  "
+                  >
                     Sign Up
                   </button>
                 </Link>

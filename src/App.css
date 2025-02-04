@@ -12,3 +12,9 @@
   --clr-nav-2: "#0D192F";
   --clr-black: "#000000";
 }
+
+body {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}

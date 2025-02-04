@@ -6,9 +6,9 @@ import { MdArrowOutward } from "react-icons/md";
 const BenefitsTwo = () => {
   return (
     <div className="w-screen mt-[60px] px-[10px] flex flex-col items-center xl:flex-row xl:gap-x-[30px] xl:px-[100px] overflow-x-hidden">
-      <img src={benefitsTwoHero} alt="benefits-two-hero" />
+      <img className="xl:w-1/2" src={benefitsTwoHero} alt="benefits-two-hero" />
       <div>
-        <div className="mt-[30px]">
+        <div className="mt-[30px] xl:w-[90%]">
           <h1
             className="font-bold text-[20px] text-[#323232] text-center xl:text-left xl:font-bold xl:text-[36px]
           xl:ml-[50px]
