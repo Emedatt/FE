@@ -110,7 +110,7 @@ const Nav = () => {
               animate={{ width: "90%" }}
               transition={{ duration: 0.75 }}
               exit={{ width: 0, transition: { duration: 1 } }}
-              className="absolute top-0 right-0 w-[90%] h-screen py-[30px] bg-[#0D192F] flex flex-col z-[50]"
+              className="absolute top-0 right-0 w-[90%] h-[2000px] py-[30px] bg-[#0D192F] flex flex-col z-[50]"
             >
               <div className="*:text-[20px] *:text-[#FFFFFF] flex flex-col items-center gap-y-[48px]">
                 {showCancel && (

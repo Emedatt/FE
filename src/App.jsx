@@ -17,9 +17,10 @@ import SignUp from "./components/SignUp/SignUp";
 import ResetPassword from "./components/ResetPassword/ResetPassword";
 import CheckEmail from "./components/CheckEmail/CheckEmail";
 import ResetSuccessful from "./components/ResetSuccessful/ResetSuccessful";
+import CheckEmailSignUp from "./components/CheckEmailSignUp/CheckEmailSignUp";
 const Layout = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ["/login", "/forgot-password", "/reset-password", "/check-email", "/reset-successful"]; // Add any other routes where navbar shouldn't appear
+  const hideNavbarRoutes = ["/login", "/forgot-password", "/reset-password", "/check-email", "/reset-successful", "/signup", "/check-email-signup"]; // Add any other routes where navbar shouldn't appear
 
   return (
     <>
@@ -35,6 +36,7 @@ const Layout = () => {
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-successful" element={<ResetSuccessful />} />
+        <Route path="/check-email-signup" element={<CheckEmailSignUp />} />
       </Routes>
     </>
   );

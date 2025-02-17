@@ -6,30 +6,38 @@ import { Link } from "react-router-dom";
 
 const ResetPassword = () => {
   const [toggleEye, setToggleEye] = useState(true);
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [isMatch, setIsMatch] = useState(false);
-
-  // Handle password change
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    checkPasswordMatch(e.target.value, confirmPassword); // Check password match on password change
-  };
-
-  // Handle confirm password change
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    checkPasswordMatch(password, e.target.value); // Check password match on confirm password change
-  };
-
-  // Function to check if passwords match
-  const checkPasswordMatch = (password, confirmPassword) => {
-    if (password === confirmPassword && password.length > 0) {
-      setIsMatch(true);
-    } else {
-      setIsMatch(false);
-    }
-  };
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [error, setError] = useState("");
+    const [isMatch, setIsMatch] = useState(false);
+  
+    
+    const handlePasswordChange = (e) => {
+      const newPassword = e.target.value;
+      setPassword(newPassword);
+      checkPasswordMatch(newPassword, confirmPassword);
+    };
+  
+    
+    const handleConfirmPasswordChange = (e) => {
+      const newConfirmPassword = e.target.value;
+      setConfirmPassword(newConfirmPassword);
+      checkPasswordMatch(password, newConfirmPassword);
+    };
+  
+    
+    const checkPasswordMatch = (password, confirmPassword) => {
+      if (password.length < 8) {
+        setError("Must be 8 characters at least");
+        setIsMatch(false);
+      } else if (password === confirmPassword && confirmPassword.length > 0) {
+        setIsMatch(true);
+        setError("");
+      } else {
+        setIsMatch(false);
+        setError("");
+      }
+    };
 
   return (
     <div className="w-screen flex h-[1024px] items-center">
@@ -59,6 +67,7 @@ const ResetPassword = () => {
               placeholder="Enter password"
               className="border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2 outline-none"
             />
+            {error && <p className="text-red-500 text-sm mt-1">{error}</p>}
           </div>
           <div className="flex flex-col mt-[32px]">
             <label
