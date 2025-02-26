@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 import { LeftAuthSignUp } from "../SignUp/LeftAuthSignUp";
 import { Link } from "react-router-dom";
 import leftArrow from "../../images/left-arrow.svg";
+import verifyAccountSignup from '../../images/verify-account-signup.svg';
 const CheckEmailSignUp = () => {
   const inputRefs = useRef([]);
 
@@ -33,11 +34,14 @@ const CheckEmailSignUp = () => {
 
   return (
     <div className="w-screen flex h-[1024px] items-center">
-      <LeftAuthSignUp />
+      <LeftAuthSignUp 
+        image={verifyAccountSignup}
+        alt="verify-account-signup-progress"
+      />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
         <form action="">
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
-            Check Your Email
+            Verify Email
           </h1>
           <p className="text-[16px] text-[#969696] text-center">
             A 6-digit code was sent to your email Ad***hn@gmail.com. Check email
@@ -61,8 +65,9 @@ const CheckEmailSignUp = () => {
           <p className="text-[12px] text-[#FF6F61] font-medium">
             Input a valid code
           </p>
-          <Link to="/reset-password">
-            <button className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]">
+          <Link to="/patient-signup">
+            <button type="submit" 
+            className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]">
               Verify
             </button>
           </Link>

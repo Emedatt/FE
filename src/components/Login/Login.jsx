@@ -75,7 +75,7 @@ export const Login = () => {
             </Link>
           </div>
           <Link to="/dashboard">
-            <button className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[40px] cursor-pointer">
+            <button type="submit" className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[40px] cursor-pointer">
               Login
             </button>
           </Link>

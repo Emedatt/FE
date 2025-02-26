@@ -33,7 +33,7 @@ const ForgotPassword = () => {
             />
           </div>
           <Link to="/check-email">
-            <button className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[40px] cursor-pointer">
+            <button type="submit" className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[40px] cursor-pointer">
               Reset Password
             </button>
           </Link>

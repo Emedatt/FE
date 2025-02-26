@@ -4,6 +4,10 @@ import createAccountProgress from '../../images/create-account-progress.svg';
 import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import {Link} from 'react-router-dom';
+import hr from '../../images/hr.svg';
+import googleIcon from "../../images/google-icon.svg";
+import appleIcon from "../../images/apple-icon.svg";
+import facebookIcon from "../../images/facebook-icon.svg";
 
 const SignUp = () => {
   const [toggleEye, setToggleEye] = useState(true);
@@ -53,7 +57,7 @@ const SignUp = () => {
           <p className="text-[16px] text-[#969696] text-center">
             Sign up to access personalized healthcare.
           </p>
-          <div>
+          <div className='mt-[60px]'>
             <label
               htmlFor="role"
               className="text-[14px] text-[#323232] mb-[10px]"
@@ -207,10 +211,42 @@ const SignUp = () => {
             </label>
           </div>
           <Link to="/check-email-signup">
-            <button className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]">
-              Reset Password
+            <button type="submit" className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[20px] cursor-pointer">
+              Create Account
             </button>
           </Link>
+          <div className="flex items-center justify-between w-full mt-[20px]">
+            <img src={hr} alt="hr" className="w-1/6" />
+            <p className="font-medium text-[12px] text-[#969696] flex-1 text-center">
+              or do it via other accounts
+            </p>
+            <img src={hr} alt="hr" className="w-1/6" />
+          </div>
+          <div className="flex justify-center gap-x-[32px] mt-[24px]">
+            <a href="" className="cursor-pointer">
+              <div className="size-[52px] p-[14px] shadow-md rounded-[50%]">
+                <img
+                  src={googleIcon}
+                  alt="googleIcon"
+                  className="size-[23px]"
+                />
+              </div>
+            </a>
+            <a href="" className="cursor-pointer">
+              <div className="size-[52px] p-[14px] shadow-md rounded-[50%]">
+                <img src={appleIcon} alt="appleIcon" className="size-[23px]" />
+              </div>
+            </a>
+            <a href="" className="cursor-pointer">
+              <div className="size-[52px] p-[14px] shadow-md rounded-[50%]">
+                <img
+                  src={facebookIcon}
+                  alt="facebookIcon"
+                  className="size-[23px]"
+                />
+              </div>
+            </a>
+          </div>
         </form>
       </div>
     </div>

@@ -18,9 +18,14 @@ import ResetPassword from "./components/ResetPassword/ResetPassword";
 import CheckEmail from "./components/CheckEmail/CheckEmail";
 import ResetSuccessful from "./components/ResetSuccessful/ResetSuccessful";
 import CheckEmailSignUp from "./components/CheckEmailSignUp/CheckEmailSignUp";
+import PatientSignUp from './components/PatientSignUp/PatientSignUp';
+import DoctorSignUp from "./components/DoctorSignUp/DoctorSignUp";
+import AllSet from "./components/AllSet/AllSet";
+import Dashboard from "./components/Dashboard/Dashboard";
 const Layout = () => {
   const location = useLocation();
-  const hideNavbarRoutes = ["/login", "/forgot-password", "/reset-password", "/check-email", "/reset-successful", "/signup", "/check-email-signup"]; // Add any other routes where navbar shouldn't appear
+  const hideNavbarRoutes = ["/login", "/forgot-password", "/reset-password", "/check-email", "/reset-successful", "/signup", 
+    "/check-email-signup", "/patient-signup", "/allset", "/doctor-signup"];
 
   return (
     <>
@@ -37,6 +42,10 @@ const Layout = () => {
         <Route path="/check-email" element={<CheckEmail />} />
         <Route path="/reset-successful" element={<ResetSuccessful />} />
         <Route path="/check-email-signup" element={<CheckEmailSignUp />} />
+        <Route path="/patient-signup" element={<PatientSignUp />} />
+        <Route path="/doctor-signup" element={<DoctorSignUp />} />
+        <Route path="/allset" element={<AllSet />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </>
   );
