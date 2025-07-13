@@ -3,45 +3,89 @@ import React, { useState, useRef, useEffect } from "react";
 import { LeftAuth } from "@/_components/LeftAuth";
 import Link from "next/link";
 import leftArrow from "../../../public/left-arrow.svg";
-import Image from 'next/image';
+import Image from "next/image";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq, gt, and } from "drizzle-orm";
+import { useRouter } from "next/navigation";
+
 const CheckEmail = () => {
+  const router = useRouter();
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+  const [code, setCode] = useState<string[]>(Array(6).fill(""));
+  const [error, setError] = useState("");
+  const [time, setTime] = useState(59);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
   ) => {
-    if (e.target.value.length === e.target.maxLength) {
+    const newCode = [...code];
+    newCode[index] = e.target.value;
+    setCode(newCode);
+
+    if (e.target.value.length === 1 && index < 5) {
       const nextInput = inputRefs.current[index + 1];
-      if (nextInput) {
-        nextInput.focus();
-      }
+      nextInput?.focus();
     }
   };
-  const [time, setTime] = useState(59);
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60);
     const secondsRemaining = seconds % 60;
-    return `${String(minutes).padStart(2, "0")}:${String(
-      secondsRemaining
-    ).padStart(2, "0")}`;
+    return `${String(minutes).padStart(2, "0")}:${String(secondsRemaining).padStart(2, "0")}`;
   };
-  const CountdownTimer = () => {
-    useEffect(() => {
-      if (time === 0) return;
-      const timerId = setInterval(() => {
-        setTime((prevTime) => prevTime - 1);
-      }, 1000);
-      return () => clearInterval(timerId);
-    }, [time]);
+
+  useEffect(() => {
+    if (time === 0) return;
+    const timerId = setInterval(() => {
+      setTime((prevTime) => prevTime - 1);
+    }, 1000);
+    return () => clearInterval(timerId);
+  }, [time]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const fullCode = code.join("");
+
+    try {
+      // Check code in database
+      const [user] = await db
+        .select()
+        .from(users)
+        .where(
+          and(
+            eq(users.verificationCode, fullCode),
+            gt(users.codeExpiresAt, new Date())
+          )
+        );
+
+      if (!user) {
+        setError("Invalid or expired code");
+        return;
+      }
+
+      // Clear code after successful verification
+      await db
+        .update(users)
+        .set({
+          verificationCode: null,
+          codeExpiresAt: null,
+        })
+        .where(eq(users.id, user.id));
+
+      router.push("/reset-password");
+    } catch (err) {
+      setError("Verification failed");
+      console.error(err);
+    }
   };
-  CountdownTimer();
 
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuth />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
             Check Your Email
           </h1>
@@ -53,30 +97,30 @@ const CheckEmail = () => {
             {[...Array(6)].map((_, index) => (
               <input
                 key={index}
-                type="number"
-                required
-                maxLength={1} // Optional: Limit input to 1 character if needed
-                ref={(el) => {
-                  inputRefs.current[index] = el; // Just assign, don't return
-                }}
-                className="appearance-none border border-gray-300 p-2 rounded-md text-[#323232] caret-[#323232] 
-                text-[14px] text-center sm:size-[62px] h-[40px] w-1/6
-                "
+                type="text"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                maxLength={1}
+                value={code[index]}
                 onChange={(e) => handleInputChange(e, index)}
+                ref={(el) => {
+                  if (el) {
+                    inputRefs.current[index] = el;
+                  }
+                }}
+                className="appearance-none border border-gray-300 p-2 rounded-md text-[#323232] text-center sm:size-[62px] h-[40px] w-1/6"
               />
             ))}
           </div>
-          <p className="text-[12px] text-[#FF6F61] font-medium">
-            Input a valid code
-          </p>
-          <Link href="/reset-password">
-            <button
-              type="submit"
-              className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]"
-            >
-              Submit Code
-            </button>
-          </Link>
+          {error && (
+            <p className="text-[12px] text-[#FF6F61] font-medium">{error}</p>
+          )}
+          <button
+            type="submit"
+            className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[60px]"
+          >
+            Submit Code
+          </button>
           <p className="text-[14px] text-center mt-[42px] text-[#969696]">
             Reset code in {formatTime(time)}
           </p>

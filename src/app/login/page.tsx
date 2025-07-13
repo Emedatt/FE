@@ -5,23 +5,81 @@ import hr from "../../../public/hr.svg";
 import googleIcon from "../../../public/google-icon.svg";
 import appleIcon from "../../../public/apple-icon.svg";
 import facebookIcon from "../../../public/facebook-icon.svg";
-import { FaEye } from "react-icons/fa6";
-import { FaEyeSlash } from "react-icons/fa6";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { LeftAuth } from "@/_components/LeftAuth";
-import Image from 'next/image';
-export default function Login () {
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { db } from "@/db";
+import { users } from "@/db/schema";
+import { eq } from "drizzle-orm";
+import bcrypt from "bcryptjs";
+
+export default function Login() {
   const [toggleEye, setToggleEye] = useState(true);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    try {
+      // 1. Check if user exists
+      const user = await db.query.users.findFirst({
+        where: eq(users.email, email),
+      });
+
+      if (!user) {
+        setError("Email not registered. Please sign up first.");
+        return;
+      }
+
+      // 2. Verify password
+      if (!user.password) {
+        setError("Something went wrong. Please try again.");
+        return;
+      }
+
+      const passwordMatch = await bcrypt.compare(password, user.password);
+      
+      if (!passwordMatch) {
+        setError("Invalid password. Please try again.");
+        return;
+      }
+
+      // 3. Login successful - redirect to dashboard
+      router.push("/dashboard");
+    } catch (err) {
+      console.error("Login error:", err);
+      setError("Login failed. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuth />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form action="" className="">
+        <form onSubmit={handleSubmit}>
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
             Welcome Back!
           </h1>
           <p className="text-[16px] text-[#969696] text-center">
             We're glad to see you again
           </p>
+
+          {/* Error Message */}
+          {error && (
+            <div className="mt-4 p-3 bg-red-100 text-red-700 rounded-md text-center">
+              {error}
+            </div>
+          )}
+
           <div className="flex flex-col mt-[60px]">
             <label
               htmlFor="email"
@@ -33,13 +91,16 @@ export default function Login () {
               type="email"
               id="email"
               name="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               required
               placeholder="Enter e-mail"
-              className="border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2
-            outline-none
-            "
+              className={`border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2 outline-none ${
+                error.includes("not registered") ? "border-red-500" : ""
+              }`}
             />
           </div>
+
           <div className="flex flex-col mt-[32px]">
             <label
               htmlFor="password"
@@ -49,29 +110,31 @@ export default function Login () {
             </label>
             <div className="relative w-full">
               <input
-                type={`${toggleEye ? "password" : "text"}`}
+                type={toggleEye ? "password" : "text"}
                 id="password"
                 name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Enter password"
-                className="border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2
-            outline-none w-full
-            "
-              />
-              <FaEye
-                onClick={() => setToggleEye(!toggleEye)}
-                className={`absolute top-[18px] right-[18px] cursor-pointer ${
-                  toggleEye ? "block" : "hidden"
+                className={`border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2 outline-none w-full ${
+                  error.includes("Invalid password") ? "border-red-500" : ""
                 }`}
               />
-              <FaEyeSlash
-                onClick={() => setToggleEye(!toggleEye)}
-                className={`absolute top-[18px] right-[18px] ${
-                  toggleEye ? "hidden" : "block"
-                }`}
-              />
+              {toggleEye ? (
+                <FaEye
+                  onClick={() => setToggleEye(!toggleEye)}
+                  className="absolute top-[18px] right-[18px] cursor-pointer"
+                />
+              ) : (
+                <FaEyeSlash
+                  onClick={() => setToggleEye(!toggleEye)}
+                  className="absolute top-[18px] right-[18px] cursor-pointer"
+                />
+              )}
             </div>
           </div>
+
           <div className="mt-[10px] flex justify-end">
             <Link
               href="/forgot-password"
@@ -80,14 +143,17 @@ export default function Login () {
               Forgot Password?
             </Link>
           </div>
-          <Link href="/dashboard">
-            <button
-              type="submit"
-              className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[40px] cursor-pointer"
-            >
-              Login
-            </button>
-          </Link>
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className={`bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[40px] cursor-pointer ${
+              isLoading ? "opacity-70" : ""
+            }`}
+          >
+            {isLoading ? "Logging in..." : "Login"}
+          </button>
+
           <div className="flex items-center justify-between w-full mt-[40px]">
             <Image src={hr} alt="hr" className="w-1/6" />
             <p className="font-medium text-[12px] text-[#969696] flex-1 text-center">
@@ -95,6 +161,7 @@ export default function Login () {
             </p>
             <Image src={hr} alt="hr" className="w-1/6" />
           </div>
+
           <div className="flex justify-center gap-x-[32px] mt-[24px]">
             <a href="" className="cursor-pointer">
               <div className="size-[52px] p-[14px] shadow-md rounded-[50%]">
@@ -107,7 +174,11 @@ export default function Login () {
             </a>
             <a href="" className="cursor-pointer">
               <div className="size-[52px] p-[14px] shadow-md rounded-[50%]">
-                <Image src={appleIcon} alt="appleIcon" className="size-[23px]" />
+                <Image
+                  src={appleIcon}
+                  alt="appleIcon"
+                  className="size-[23px]"
+                />
               </div>
             </a>
             <a href="" className="cursor-pointer">
@@ -120,6 +191,7 @@ export default function Login () {
               </div>
             </a>
           </div>
+
           <div className="mt-[60px]">
             <p className="text-[14px] text-[#969696] text-center">
               Don't have an account?{" "}
@@ -135,4 +207,4 @@ export default function Login () {
       </div>
     </div>
   );
-};
+}

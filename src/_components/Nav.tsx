@@ -204,7 +204,7 @@ const Nav = () => {
                 >
                   Login
                 </Link>
-                <Link href="/signup" onClick={handleClick}>
+                <Link href="/signup" onClick={handleClick} className="cursor-pointer">
                   <button
                     className="h-[53px] w-[240px] text-[20px] bg-[#417BEB] text-white rounded-[16px] hover:ring-[2px]
                   hover:ring-offset-[2px] hover:ring-[#417BEB] active:ring-[2px]
