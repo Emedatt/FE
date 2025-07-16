@@ -4,9 +4,6 @@ import { LeftAuth } from "@/_components/LeftAuth";
 import Link from "next/link";
 import leftArrow from "../../../public/left-arrow.svg";
 import Image from "next/image";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq, gt, and } from "drizzle-orm";
 import { useRouter } from "next/navigation";
 
 const CheckEmail = () => {
@@ -44,48 +41,12 @@ const CheckEmail = () => {
     return () => clearInterval(timerId);
   }, [time]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const fullCode = code.join("");
-
-    try {
-      // Check code in database
-      const [user] = await db
-        .select()
-        .from(users)
-        .where(
-          and(
-            eq(users.verificationCode, fullCode),
-            gt(users.codeExpiresAt, new Date())
-          )
-        );
-
-      if (!user) {
-        setError("Invalid or expired code");
-        return;
-      }
-
-      // Clear code after successful verification
-      await db
-        .update(users)
-        .set({
-          verificationCode: null,
-          codeExpiresAt: null,
-        })
-        .where(eq(users.id, user.id));
-
-      router.push("/reset-password");
-    } catch (err) {
-      setError("Verification failed");
-      console.error(err);
-    }
-  };
 
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuth />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form onSubmit={handleSubmit}>
+        <form>
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
             Check Your Email
           </h1>

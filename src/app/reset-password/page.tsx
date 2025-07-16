@@ -3,11 +3,6 @@ import React, { useState } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { LeftAuth } from "@/_components/LeftAuth";
 import { FaEye, FaEyeSlash } from "react-icons/fa6";
-import { db } from "@//db";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
-import { verifyResetToken, invalidateResetToken } from "@/lib/auth";
 
 const ResetPassword = () => {
   const [toggleEye, setToggleEye] = useState(true);
@@ -16,8 +11,6 @@ const ResetPassword = () => {
   const [error, setError] = useState("");
   const [isMatch, setIsMatch] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const searchParams = useSearchParams();
-  const router = useRouter();
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -46,54 +39,11 @@ const ResetPassword = () => {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!isMatch) {
-      setError("Passwords do not match");
-      return;
-    }
-
-    const token = searchParams.get("token");
-    if (!token) {
-      setError("Invalid reset link");
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      // Verify the token
-      const tokenData = await verifyResetToken(token);
-      if (!tokenData) {
-        throw new Error("Invalid or expired token");
-      }
-
-      // Hash the new password
-      const hashedPassword = await bcrypt.hash(password, 10);
-
-      // Update user password - now types will match
-      await db
-        .update(users)
-        .set({ password: hashedPassword })
-        .where(eq(users.id, parseInt(tokenData.userId))); // No more type error
-
-      // Invalidate the used token
-      await invalidateResetToken(tokenData.tokenId);
-
-      router.push("/reset-successful");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Reset failed");
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuth />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form onSubmit={handleSubmit} className="">
+        <form className="">
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
             Reset Password
           </h1>

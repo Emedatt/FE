@@ -6,9 +6,6 @@ import leftArrow from "../../../public/left-arrow.svg";
 import verifyAccountSignup from "../../../public/verify-account-signup.svg";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq, and, gt } from "drizzle-orm";
 
 const CheckEmailSignUp = () => {
   const router = useRouter();
@@ -17,9 +14,8 @@ const CheckEmailSignUp = () => {
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const [code, setCode] = useState<string[]>(Array(6).fill(""));
   const [error, setError] = useState("");
-  const [time, setTime] = useState(300); // 5 minutes
+  const [time, setTime] = useState(300);
 
-  // Handle code input
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     index: number
@@ -40,65 +36,6 @@ const CheckEmailSignUp = () => {
     return () => clearInterval(timer);
   }, [time]);
 
-  // Form submission
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const fullCode = code.join("");
-
-    try {
-      // Verify code against database
-      const [user] = await db
-        .select()
-        .from(users)
-        .where(
-          and(
-            eq(users.email, email),
-            eq(users.verificationCode, fullCode),
-            gt(users.codeExpiresAt, new Date())
-          )
-        );
-
-      if (!user) {
-        setError("Invalid or expired code");
-        return;
-      }
-
-      // Clear verification code
-      await db
-        .update(users)
-        .set({ verificationCode: null, codeExpiresAt: null })
-        .where(eq(users.id, user.id));
-
-      // Redirect based on user role
-      if (user.role === "patient") {
-        router.push("/patient-signup");
-      } else if (user.role === "physician") {
-        router.push("/doctor-signup");
-      } else {
-        router.push("/signup"); // Fallback
-      }
-    } catch (err) {
-      setError("Verification failed");
-      console.error(err);
-    }
-  };
-  const handleResend = async () => {
-    try {
-      const res = await fetch("/api/send-verification", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, role: "patient" }), // or get role from elsewhere
-      });
-
-      if (!res.ok) throw new Error("Failed to resend");
-
-      setTime(300); // Reset timer
-      setError("");
-    } catch (err) {
-      setError("Could not resend code. Please try again.");
-    }
-  };
-  
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -109,7 +46,7 @@ const CheckEmailSignUp = () => {
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuthSignUp image={verifyAccountSignup} />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form onSubmit={handleSubmit}>
+        <form>
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
             Verify Email
           </h1>

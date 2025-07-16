@@ -6,9 +6,7 @@ import Link from "next/link";
 import leftArrow from "../../../public/left-arrow.svg";
 import Image from 'next/image';
 import { useRouter } from "next/router";
-import bcrypt from 'bcryptjs';
-import { db } from "@/db";
-import { users, patientProfile } from '@/db/schema';
+
 const PatientSignUp = () => {
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -20,43 +18,11 @@ const PatientSignUp = () => {
     additionalInfo: "",
   });
 
-  // In your handleSubmit function:
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    try {
-      // 1. Create user first
-      const hashedPassword = await bcrypt.hash(formData.password, 10);
-      const [user] = await db
-        .insert(users)
-        .values({
-          email: formData.email,
-          password: hashedPassword,
-          role: "patient",
-        })
-        .returning({ id: users.id });
-
-      // 2. Insert patient profile with proper typing
-      await db.insert(patientProfile).values({
-        userId: user.id,
-        gender: formData.gender, // No need for type assertion if schema matches
-        dob: new Date(formData.dob).toISOString(), // Convert to ISO string
-        healthConditions: formData.healthConditions,
-        additionalInfo: formData.additionalInfo,
-      });
-
-      router.push("/allset");
-    } catch (error) {
-      console.error("Signup failed:", error);
-      // Add error state handling here
-    }
-  };
-  
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuthSignUp image={patientFinish} />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form onSubmit={handleSubmit}>
+        <form>
           <h1 className="text-[32px] font-bold text-[#323232] text-center mb-[16px]">
             You Are Almost There!
           </h1>

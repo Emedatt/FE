@@ -13,7 +13,6 @@ import appleIcon from "../../../public/apple-icon.svg";
 import facebookIcon from "../../../public/facebook-icon.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { signUpAction } from "@/lib/signup";
 
 
 // Define Zod schema
@@ -52,23 +51,12 @@ const SignUp = () => {
 
   const router = useRouter();
 
-  const onSubmit = async (data: SignUpFormData) => {
-    const result = await signUpAction(data);
-
-    if (result?.error) {
-      setApiError(result.error);
-      return;
-    }
-
-    router.push(`/check-email-sign-up?email=${data.email}&role=${data.role}`);
-  };
-    
 
   return (
     <div className="flex h-[1400px] items-center max-w-[1440px] mx-auto">
       <LeftAuthSignUp image={createAccountProgress} />
       <div className="px-[20px] 1/2 max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <h1 className="text-[32px] font-bold text-[#323232] text-center mb-[16px]">
             Create Your Account!
           </h1>
