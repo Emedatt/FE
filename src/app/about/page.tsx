@@ -183,7 +183,7 @@ const About = () => {
             <div className='bg-[#417BEB] p-3 rounded-lg' >
               <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M20.48 4.47998H4.47998C3.37541 4.47998 2.47998 5.37541 2.47998 6.47998V18.48C2.47998 19.5845 3.37541 20.48 4.47998 20.48H20.48C21.5846 20.48 22.48 19.5845 22.48 18.48V6.47998C22.48 5.37541 21.5846 4.47998 20.48 4.47998Z" fill="white"/>
-              <path d="M22.48 7.47998L13.51 13.18C13.2013 13.3734 12.8443 13.476 12.48 13.476C12.1157 13.476 11.7587 13.3734 11.45 13.18L2.47998 7.47998" stroke="#417BEB" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M22.48 7.47998L13.51 13.18C13.2013 13.3734 12.8443 13.476 12.48 13.476C12.1157 13.476 11.7587 13.3734 11.45 13.18L2.47998 7.47998" stroke="#417BEB" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </div>
             <div>
