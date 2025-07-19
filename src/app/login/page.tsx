@@ -9,10 +9,7 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { LeftAuth } from "@/_components/LeftAuth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import bcrypt from "bcryptjs";
+
 
 export default function Login() {
   const [toggleEye, setToggleEye] = useState(true);
@@ -26,40 +23,8 @@ export default function Login() {
     e.preventDefault();
     setError("");
     setIsLoading(true);
-
-    try {
-      // 1. Check if user exists
-      const user = await db.query.users.findFirst({
-        where: eq(users.email, email),
-      });
-
-      if (!user) {
-        setError("Email not registered. Please sign up first.");
-        return;
-      }
-
-      // 2. Verify password
-      if (!user.password) {
-        setError("Something went wrong. Please try again.");
-        return;
-      }
-
-      const passwordMatch = await bcrypt.compare(password, user.password);
-      
-      if (!passwordMatch) {
-        setError("Invalid password. Please try again.");
-        return;
-      }
-
-      // 3. Login successful - redirect to dashboard
-      router.push("/dashboard");
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Login failed. Please try again.");
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }
+    
 
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
