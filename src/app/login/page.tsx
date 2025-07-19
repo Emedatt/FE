@@ -9,6 +9,7 @@ import { FaEye } from "react-icons/fa6";
 import { FaEyeSlash } from "react-icons/fa6";
 import { LeftAuth } from "@/_components/LeftAuth";
 import Image from 'next/image';
+
 export default function Login () {
   const [toggleEye, setToggleEye] = useState(true);
   return (
