@@ -12,11 +12,13 @@ import googleIcon from "../../../public/google-icon.svg";
 import appleIcon from "../../../public/apple-icon.svg";
 import facebookIcon from "../../../public/facebook-icon.svg";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
+
 
 // Define Zod schema
 const signUpSchema = z
   .object({
-    role: z.string().min(1, "Please select your role"),
+    role: z.enum(["patient", "physician"]),
     fullName: z.string().min(1, "Full name is required"),
     email: z.string().email("Invalid email address"),
     password: z.string().min(8, "Password must be at least 8 characters"),
@@ -34,6 +36,7 @@ type SignUpFormData = z.infer<typeof signUpSchema>;
 
 const SignUp = () => {
   const [toggleEye, setToggleEye] = useState(true);
+  const [apiError, setApiError] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -46,16 +49,14 @@ const SignUp = () => {
   const password = watch("password");
   const confirmPassword = watch("confirmPassword");
 
-  const onSubmit = (data: SignUpFormData) => {
-    console.log("Form submitted:", data);
-    // Handle form submission (e.g., API call)
-  };
+  const router = useRouter();
+
 
   return (
     <div className="flex h-[1400px] items-center max-w-[1440px] mx-auto">
       <LeftAuthSignUp image={createAccountProgress} />
       <div className="px-[20px] 1/2 max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form>
           <h1 className="text-[32px] font-bold text-[#323232] text-center mb-[16px]">
             Create Your Account!
           </h1>
@@ -77,8 +78,9 @@ const SignUp = () => {
               className="w-full py-[14px] px-[16px] text-[14px] rounded-[12px] border-solid border-2 border-[#DCDCDC] text-[#969696] bg-white"
             >
               <option value="">Choose your role</option>
-              <option value="physician">Physician</option>
               <option value="patient">Patient</option>
+              <option value="physician">Physician</option>{" "}
+              {/* Changed from "doctor" */}
             </select>
             {errors.role && (
               <p className="text-red-500 text-sm mt-1">{errors.role.message}</p>
@@ -231,6 +233,9 @@ const SignUp = () => {
               </p>
             )}
           </div>
+          {apiError && (
+            <p className="text-red-500 text-sm mb-4 text-center">{apiError}</p>
+          )}
 
           {/* Submit Button */}
           <button
