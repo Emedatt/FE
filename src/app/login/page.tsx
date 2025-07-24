@@ -9,20 +9,48 @@ import { FaEye, FaEyeSlash } from "react-icons/fa6";
 import { LeftAuth } from "@/_components/LeftAuth";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { body } from "motion/react-client";
+import { memoryUsage } from "process";
+import { unknown } from "zod";
 
 
 export default function Login() {
   const [toggleEye, setToggleEye] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
+  const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
     setIsLoading(true);
+    const data = {
+      email,
+      password
+    }
+    console.log(data)
+    try{
+      const response = await fetch("https://emedatt-care.onrender.com/api/v1/auth/login",{
+        method : "POST",
+        body : JSON.stringify(data),
+        headers : {
+          'content-type': 'application/json'
+        }
+      })
+      if(response.ok){
+        const responseBody = await response.json()
+         console.log(responseBody)
+        router.push("/dashboard")
+      }
+    }
+    catch(error){
+      setError(error instanceof Error ? error.message : String(error));
+    }
+    finally{
+      setIsLoading(false)
+    }
+
   }
     
 
@@ -82,9 +110,9 @@ export default function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 placeholder="Enter password"
-                className={`border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2 outline-none w-full ${
-                  error.includes("Invalid password") ? "border-red-500" : ""
-                }`}
+                 className={`border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2 outline-none w-full ${
+                   error.includes("Invalid password") ? "border-red-500" : ""
+                 }`}
               />
               {toggleEye ? (
                 <FaEye
