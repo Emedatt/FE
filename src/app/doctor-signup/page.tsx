@@ -53,7 +53,8 @@ const DoctorSignUp = () => {
     
           router.push("/allset");
         } catch (error) {
-          console.error("Signup failed:", error);
+          // Handle error appropriately without console.error
+          alert("Signup failed. Please try again.");
         }
       };
   

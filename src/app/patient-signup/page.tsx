@@ -107,7 +107,7 @@ const PatientSignUp = () => {
           <Link href="/allset">
             <button
               type="submit"
-              className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]"
+              className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[60px] cursor-pointer mt-[60px]"
             >
               Finish Up
             </button>

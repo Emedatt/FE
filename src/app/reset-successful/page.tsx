@@ -14,7 +14,7 @@ const ResetSuccessful = () => {
         </h1>
         <Image src={bigTick} alt="big-tick" className="mt-[64px] mx-auto" />
         <Link href="/login">
-          <button className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]">
+          <button className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[60px] cursor-pointer mt-[60px]">
             Go to Login
           </button>
         </Link>

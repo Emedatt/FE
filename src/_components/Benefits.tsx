@@ -20,7 +20,7 @@ const Benefits = () => {
         xl:gap-x-[20px] xl:px-[100px] xl:justify-center
       ">
         {
-          benefits.map(({id, color, img, title, text}: {id: number, color: string, img: any, title: string, text: string}) => {
+          benefits.map(({id, color, img, title, text}: {id: number, color: string, img: string, title: string, text: string}) => {
             return (
               <div key={id} className="max-w-[362px] h-[319px] shadow-lg xl:col-span-4 xl:row-span-3">
                 <div

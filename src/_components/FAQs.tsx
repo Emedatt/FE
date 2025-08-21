@@ -7,9 +7,9 @@ import { FaPlus } from "react-icons/fa6";
 import { IoCloseSharp } from "react-icons/io5";
 
 const FAQs = () => {
-  const [openIndex, setOpenIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const toggleAccordion = (index: any) => {
+  const toggleAccordion = (index: number) => {
     setOpenIndex(openIndex === index ? null : index);
   };
   return (

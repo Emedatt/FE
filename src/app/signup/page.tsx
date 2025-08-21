@@ -13,7 +13,40 @@ import facebookIcon from "../../../public/facebook-icon.svg";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
-const initialState = {
+interface FormState {
+  role: {
+    value: string;
+    error: { message: string; color: string } | null;
+  };
+  fullName: {
+    value: string;
+    error: { message: string; color: string } | null;
+  };
+  email: {
+    value: string;
+    error: { message: string; color: string } | null;
+  };
+  password: {
+    value: string;
+    error: { message: string; color: string } | null;
+  };
+  confirmPassword: {
+    value: string;
+    error: { message: string; color: string } | null;
+  };
+  termsAndCondition: {
+    value: boolean;
+    error: { message: string; color: string } | null;
+  };
+  isValid?: boolean;
+}
+
+interface FormAction {
+  type: string;
+  payLoad: string | boolean;
+}
+
+const initialState: FormState = {
   role:{
     value : " ",
     error: null
@@ -40,7 +73,7 @@ const initialState = {
   }
 }
 
-const formReducer =(state: any, action:any)=>{
+const formReducer = (state: FormState, action: FormAction): FormState => {
   let newState;
   switch (action.type) {
     case "ROLE": {
@@ -162,31 +195,25 @@ const validateConfirmPassword = (confirmPassword: string, password: string) => {
 
 const SignUp = () => {
   const [state, dispatch] = useReducer(formReducer, initialState)
-  console.log(state.role.value)
-  console.log(state.fullName.value)
-  console.log(state.email.value)
-  console.log(state.password.value)
-  console.log(state.confirmPassword.value)
-  console.log(state.termsAndCondition.value)
   const [toggleEye, setToggleEye] = useState(true);
   const router = useRouter();
 
-  const handleRoleChange=(e:any)=>{
+  const handleRoleChange=(e: React.ChangeEvent<HTMLSelectElement>)=>{
    dispatch({type:"ROLE", payLoad:e.target.value.trim()})
   }
-  const handlefullNameChange=(e:any)=>{
+  const handlefullNameChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
    dispatch({type:"fullName", payLoad:e.target.value.trim()})
   }
-  const handleEmailChange=(e:any)=>{
+  const handleEmailChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
    dispatch({ type:"EMAIL", payLoad:e.target.value.trim()})
   }
-  const handlePasswordChange=(e:any)=>{
+  const handlePasswordChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
    dispatch({type:"PASSWORD", payLoad:e.target.value.trim()})
   }
-  const handleConfirmPasswordChange=(e:any)=>{
+  const handleConfirmPasswordChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
    dispatch({type:"confirmPassword", payLoad:e.target.value.trim()})
   }
-  const handleTermsAndConditionChange=(e:any)=>{
+  const handleTermsAndConditionChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
    dispatch({type:"termsAndCondition", payLoad:e.target.checked})
   }
   const handleSubmit = (e: React.FormEvent) => {

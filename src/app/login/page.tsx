@@ -29,7 +29,6 @@ export default function Login() {
       email,
       password
     }
-    console.log(data)
     try{
       const response = await fetch("https://emedatt-care.onrender.com/api/v1/auth/login",{
         method : "POST",
@@ -40,7 +39,6 @@ export default function Login() {
       })
       if(response.ok){
         const responseBody = await response.json()
-         console.log(responseBody)
         router.push("/dashboard")
       }
     }
