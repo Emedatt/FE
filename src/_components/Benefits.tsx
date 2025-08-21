@@ -1,6 +1,7 @@
 import React from 'react';
 import { benefits } from './data';
 import Image from 'next/image';
+
 const Benefits = () => {
   return (
     <div className="mt-[20px] p-[10px]">

@@ -1,32 +1,42 @@
-import React from "react";
+"use client"
+import React, { useState } from "react";
 import patientFinish from "../../../public/patient-finish.svg";
 import { LeftAuthSignUp } from "@/_components/LeftAuthSignUp";
 import Link from "next/link";
 import leftArrow from "../../../public/left-arrow.svg";
 import Image from 'next/image';
+import { useRouter } from "next/router";
+
 const PatientSignUp = () => {
+  const router = useRouter();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    gender: "",
+    dob: "",
+    healthConditions: "",
+    additionalInfo: "",
+  });
+
   return (
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuthSignUp image={patientFinish} />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form action="">
+        <form>
           <h1 className="text-[32px] font-bold text-[#323232] text-center mb-[16px]">
             You Are Almost There!
           </h1>
           <p className="text-[16px] text-[#969696] text-center">
             Complete your profile to finish setting up your account.
           </p>
-          <div className="mt-[60px]">
-            <label
-              htmlFor="gender"
-              className="text-[14px] text-[#323232] mb-[10px]"
-            >
+          <div className="mt-[32px]">
+            <label htmlFor="gender" className="text-[14px] text-[#323232] mb-[10px]">
               Gender
             </label>
             <select
               name="gender"
-              id="gender"
               required
+              onChange={(e) => setFormData({...formData, gender: e.target.value})}
               className="w-full py-[14px] px-[16px] text-[14px] rounded-[12px] border-solid border-2 border-[#DCDCDC] text-[#969696] bg-white"
             >
               <option value="" disabled>
@@ -47,6 +57,7 @@ const PatientSignUp = () => {
               type="date"
               id="date-of-birth"
               name="date-of-birth"
+              onChange={(e) => setFormData({...formData, dob: e.target.value})}
               required
               className="border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2
             outline-none
@@ -63,6 +74,7 @@ const PatientSignUp = () => {
             <select
               name="health-conditions"
               id="health-conditions"
+              onChange={(e) => setFormData({...formData, healthConditions: e.target.value})}
               required
               className="w-full py-[14px] px-[16px] text-[14px] rounded-[12px] border-solid border-2 border-[#DCDCDC] text-[#969696] bg-white"
             >
@@ -89,6 +101,7 @@ const PatientSignUp = () => {
               placeholder="e.g, medications you are currently taking, lifestyle habits"
               cols={30}
               rows={5}
+              onChange={(e) => setFormData({...formData, additionalInfo: e.target.value})}
             ></textarea>
           </div>
           <Link href="/allset">
@@ -113,3 +126,5 @@ const PatientSignUp = () => {
 };
 
 export default PatientSignUp;
+
+

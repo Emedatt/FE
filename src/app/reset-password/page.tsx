@@ -1,9 +1,8 @@
 "use client";
 import React, { useState } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { LeftAuth } from "@/_components/LeftAuth";
-import { FaEye } from "react-icons/fa6";
-import { FaEyeSlash } from "react-icons/fa6";
-import Link from "next/link";
+import { FaEye, FaEyeSlash } from "react-icons/fa6";
 
 const ResetPassword = () => {
   const [toggleEye, setToggleEye] = useState(true);
@@ -11,6 +10,7 @@ const ResetPassword = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
   const [isMatch, setIsMatch] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
@@ -43,7 +43,7 @@ const ResetPassword = () => {
     <div className="max-w-[1440px] mx-auto flex h-[1400px] items-center">
       <LeftAuth />
       <div className="px-[20px] w-full max-w-[424px] mx-auto xl:w-1/2 h-[80%] xl:h-[70%] mt-[100px]">
-        <form action="" className="">
+        <form className="">
           <h1 className="text-[32px] font-bold text-[#323232] text-center">
             Reset Password
           </h1>
@@ -58,7 +58,7 @@ const ResetPassword = () => {
               Password
             </label>
             <input
-              type="text"
+              type={toggleEye ? "password" : "text"}
               id="passwordOne"
               name="password"
               value={password}
@@ -78,7 +78,7 @@ const ResetPassword = () => {
             </label>
             <div className="relative w-full">
               <input
-                type={`${toggleEye ? "password" : "text"}`}
+                type={toggleEye ? "password" : "text"}
                 id="passwordTwo"
                 name="confirmPassword"
                 value={confirmPassword}
@@ -87,34 +87,25 @@ const ResetPassword = () => {
                 placeholder="Confirm password"
                 className="border-[#DCDCDC] py-[14px] px-[16px] rounded-[12px] text-[#969696] text-[14px] caret-[#969696] border-solid border-2 outline-none w-full"
               />
-              <FaEye
+              <button
+                type="button"
                 onClick={() => setToggleEye(!toggleEye)}
-                className={`absolute top-[18px] right-[18px] cursor-pointer ${
-                  toggleEye ? "block" : "hidden"
-                }`}
-              />
-              <FaEyeSlash
-                onClick={() => setToggleEye(!toggleEye)}
-                className={`absolute top-[18px] right-[18px] ${
-                  toggleEye ? "hidden" : "block"
-                }`}
-              />
+                className="absolute top-[18px] right-[18px]"
+              >
+                {toggleEye ? <FaEye /> : <FaEyeSlash />}
+              </button>
             </div>
             {isMatch && confirmPassword.length > 0 && (
               <p className="text-green-500 text-sm">Passwords match!</p>
             )}
-            {!isMatch && confirmPassword.length > 0 && (
-              <p className="text-red-500 text-sm">Passwords do not match.</p>
-            )}
           </div>
-          <Link href="/reset-successful">
-            <button
-              type="submit"
-              className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[120px] cursor-pointer mt-[60px]"
-            >
-              Reset Password
-            </button>
-          </Link>
+          <button
+            type="submit"
+            disabled={!isMatch || isLoading}
+            className="bg-[#417BEB] py-[16px] font-semi-bold text-white w-full rounded-[16px] mt-[60px] disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Processing..." : "Reset Password"}
+          </button>
         </form>
       </div>
     </div>

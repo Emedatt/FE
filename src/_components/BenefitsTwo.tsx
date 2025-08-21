@@ -4,6 +4,7 @@ import { benefitsTwo } from './data';
 import Link from 'next/link';
 import { MdArrowOutward } from "react-icons/md";
 import Image from 'next/image';
+
 const BenefitsTwo = () => {
   return (
     <div className="mt-[60px] px-[10px] flex flex-col items-center xl:flex-row xl:gap-x-[30px] xl:px-[100px] overflow-x-hidden">

@@ -164,3 +164,30 @@ export const accordion = [
     textStyles: "text-[14px] text-[#323232]",
   },
 ];
+export const whyChooseUs = [
+  {
+    id: 1,
+    icon: tickIcon,
+    text: "Quick Access to top-notch medical experts in Nigeria",
+  },
+  {
+    id: 2,
+    icon: tickIcon,
+    text: "Skip the Travel expenses and long wait times",
+  },
+  {
+    id: 3,
+    icon: tickIcon,
+    text: "Fast Access to medical Care",
+  },
+  {
+    id: 4,
+    icon: tickIcon,
+    text: "Available Anytime, Anywhere",
+  },
+  {
+    id: 5,
+    icon: tickIcon,
+    text: "Secure and Private Consultations",
+  }
+];
