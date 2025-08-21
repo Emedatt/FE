@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle } from "lucide-react";
+import { MdCheckCircle } from "react-icons/md";
 import React, { useState } from "react";
 
 const Pricing = () => {
@@ -36,7 +36,7 @@ const Pricing = () => {
   const renderFeatures = (items: string[], color: string = "#417BEB") =>
     items.map((item, index) => (
       <li key={index} className="flex items-start gap-2">
-        <CheckCircle className={`w-5 h-5 mt-1`} style={{ color }} />
+        <MdCheckCircle className="w-5 h-5 mt-1" color={color} />
         <span>{item}</span>
       </li>
     ));
