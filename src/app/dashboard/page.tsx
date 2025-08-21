@@ -1,7 +1,11 @@
 import React from "react";
-
+import DoctorDashboard from "./doctorDashboard/page";
 const Dashboard = () => {
-  return <main>Dashboard</main>;
+  return <main>
+    <DoctorDashboard />
+    
+  </main>;
+  
 };
 
 export default Dashboard;
